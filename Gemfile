@@ -6,6 +6,8 @@ gem 'rails', '4.0.4'
 gem 'bootstrap-sass', '2.3.2.0'
 gem 'sprockets', '2.11.0'
 
+gem 'bcrypt', '~> 3.1.7'
+
 group :development, :test do
   gem 'sqlite3', '1.3.9'
   gem 'rspec-rails', '~> 2.14'
@@ -26,9 +28,6 @@ gem 'jbuilder', '~> 1.2'
 group :doc do
   gem 'sdoc', require: false
 end
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
 
 # Use unicorn as the app server
 # gem 'unicorn'

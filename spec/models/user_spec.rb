@@ -2,13 +2,18 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @user = User.new(name: "Bill", email: "bill@gmail.com")
+    @user = User.new(name: "Bill", email: "bill@gmail.com",
+                     password: "Taco$123", password_confirmation: "Taco$123")
   end
 
   subject { @user }
 
   it { should respond_to(:name) }
   it { should respond_to(:email) }
+  it { should respond_to(:password_digest) }
+  it { should respond_to(:password) }
+  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:authenticate) }
 
   it { should be_valid }
 
@@ -62,4 +67,40 @@ describe User do
 
     it { should_not be_valid }
   end
+
+  describe "when password is not present" do
+    before do
+      @user = User.new(name: "Bill", email: "bill@gmail.com",
+                       password: " ", password_confirmation: " ")
+    end
+
+    it { should_not be_valid }
+  end
+
+  describe "when password confirmation does not match" do
+    before { @user.password_confirmation = "not_a_match" }
+
+    it { should_not be_valid }
+  end
+
+  describe "return value of authenticate method" do
+    before { @user.save }
+    let(:found_user) { User.find_by(email: @user.email) }
+
+    describe "with correct password" do
+      it { should eq found_user.authenticate(@user.password) }
+    end
+
+    describe "with incorrect password" do
+      let(:user_from_bad_password) { found_user.authenticate("wrongPassword123") }
+      it { should_not eq user_from_bad_password }
+      specify { expect(user_from_bad_password).to be_false }
+    end
+  end
+
+  describe "with a short password" do
+    before { @user.password = @user.password_confirmation = "abc12" }
+    it { should_not be_valid }
+  end
+
 end
