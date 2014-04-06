@@ -1,4 +1,4 @@
-== Fred on Rails
+## Fred on Rails
 
 This is a playground for the Fred API as well as some overall decisions.
 
