@@ -40,19 +40,19 @@ Fred::Application.routes.draw do
   #   end
 
   # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
+    # resources :products do
+    #   resources :comments
+    #   resources :sales do
+    #     get 'recent', on: :collection
+    #   end
+    # end
 
   # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
+    # concern :toggleable do
+    #   post 'toggle'
+    # end
+    # resources :posts, concerns: :toggleable
+    # resources :photos, concerns: :toggleable
 
   # Example resource route within a namespace:
   #   namespace :admin do

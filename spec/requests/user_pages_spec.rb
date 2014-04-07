@@ -8,6 +8,42 @@ describe "User Pages" do
 
     it { should have_content('Sign up') }
     it { should have_title(full_title("Sign up")) }
+
+    let(:submit) { "Create my account" }
+
+    describe "with valid input" do
+      before do
+        fill_in "Name", with: "Handsome Dan"
+        fill_in "Email", with: "dan@example.com"
+        fill_in "Password", with: "foobar123"
+        fill_in "Confirmation", with: "foobar123"
+      end
+
+      it "should create a user" do
+        expect { click_button submit }.to change(User, :count).by(1)
+      end
+
+      describe "after saving the user" do
+        before(:each) { click_button submit }
+        let(:user) { User.find_by(email: 'dan@example.com') }
+
+        it { should have_content(user.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+      end
+    end
+
+    describe "with invalid input" do
+      it "should not create a user" do
+        expect { click_button submit }.not_to change(User, :count)
+      end
+
+      describe "after submission" do
+        before(:each) { click_button submit }
+
+        it { should have_title('Sign up') }
+        it { should have_content('error') }
+      end
+    end
   end
 
   describe "profile page" do
@@ -17,4 +53,5 @@ describe "User Pages" do
     it { should have_content(user.name) }
     it { should have_title(user.name) }
   end
+
 end
