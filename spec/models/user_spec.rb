@@ -13,6 +13,7 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
 
   it { should be_valid }
@@ -29,8 +30,8 @@ describe User do
 
   describe "when email format is invalid" do
     it "should not be valid" do
-      bad = %w{user@foo,com quax.io.com 
-               example.foo@org foo@bar+bax.com 
+      bad = %w{user@foo,com quax.io.com
+               example.foo@org foo@bar+bax.com
                fux@baz_bom.com foo@gmail.co..uk}
       bad.each do |address|
         @user.email = address
@@ -101,6 +102,11 @@ describe User do
   describe "with a short password" do
     before { @user.password = @user.password_confirmation = "abc12" }
     it { should_not be_valid }
+  end
+
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
   end
 
 end
