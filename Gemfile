@@ -8,9 +8,16 @@ gem 'sprockets', '2.11.0'
 
 gem 'bcrypt', '~> 3.1.7'
 
+# pagination
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
+
 group :development, :test do
   gem 'sqlite3', '1.3.9'
   gem 'rspec-rails', '~> 2.14'
+
+  # creating some fake users for development
+  gem 'faker', '1.1.2'
 end
 
 group :test do

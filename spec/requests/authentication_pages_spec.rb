@@ -31,6 +31,7 @@ describe "Authentication" do
       before(:each) { sign_in user }
 
       it { should have_title(user.name) }
+      it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
       it { should have_link('Sign out', href: signout_path) }
@@ -77,6 +78,20 @@ describe "Authentication" do
           it "should render the desired protected page" do
             expect(page).to have_title('Edit user')
           end
+
+          describe "when signing in again" do
+            before do
+              click_link "Sign out"
+              visit signin_path
+              fill_in "Email",    with: user.email
+              fill_in "Password", with: user.password
+              click_button "Sign in"
+            end
+
+            it "should render the default (profile) page" do
+              expect(page).to have_title(user.name)
+            end
+          end
         end
       end
     end
@@ -95,6 +110,35 @@ describe "Authentication" do
       describe "submitting a PATCH request to the Users#update action" do
         before { patch user_path(wrong_user) }
         specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
+    describe "as non-admin user" do
+      let(:user) { FactoryGirl.create(:user) }
+      let(:non_admin) { FactoryGirl.create(:user) }
+
+      before { sign_in non_admin, no_capybara: true }
+
+      describe "submitting a DELETE request to the Users#destroy action" do
+        before { delete user_path(user) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+    end
+
+    describe "as admin user" do
+      let(:admin) { FactoryGirl.create(:admin) }
+
+      before { sign_in admin, no_capybara: true }
+
+      describe "submitting a DELETE request to the Users#destroy action" do
+        before { delete user_path(admin) }
+        specify { expect(response).to redirect_to(root_url) }
+      end
+
+      it "should not be able to delete itself" do
+        expect do
+          delete user_path(admin)
+        end.not_to change(User, :count)
       end
     end
   end

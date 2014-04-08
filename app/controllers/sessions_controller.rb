@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :not_signed_in, only: [:new, :create]
+  before_action :signed_in_user, only: :destroy
 
   def new
   end
@@ -30,5 +32,13 @@ class SessionsController < ApplicationController
 
     def authenticate(user, hash)
       user.authenticate(hash[:password])
+    end
+
+    def signed_in_user
+      redirect_to root_url unless signed_in?
+    end
+
+    def not_signed_in
+      redirect_to root_url if signed_in?
     end
 end
