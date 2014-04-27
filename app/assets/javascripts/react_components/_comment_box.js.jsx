@@ -13,6 +13,11 @@ var CommentBox = React.createClass({
       dataType: "json",
       success: function ( data ) {
         this.setState({ comments: data });
+        $('#comment_notice').removeClass('hide')
+                            .html('Comment Posted!').fadeIn(200);
+        $('#comment_notice').fadeOut(2000, function() {
+                              $(this).addClass('hide');
+                            });
       }.bind(this)
     });
   },
