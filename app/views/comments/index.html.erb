@@ -1,0 +1,4 @@
+<%# <div class="alert alert-success hide"></div> %>
+<%= react_component('CommentBox',
+                    {:presenter => @presenter.to_json, :imgSrc => image_path('react_logo.png'), :imgAlt => 'REACT BRO'},
+                    {:prerender => true}) %>

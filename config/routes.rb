@@ -2,6 +2,8 @@ Fred::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
 
+  resources :comments # FUCKING AROUND
+
   root "static_pages#home"
   match '/about',    to: "static_pages#about", via: 'get'
   match '/contact',  to: "static_pages#contact", via: 'get'

@@ -17,3 +17,5 @@
 
 # Too many secrets
 .secret
+
+/*.dat

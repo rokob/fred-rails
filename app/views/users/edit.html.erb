@@ -2,17 +2,16 @@
 <h1>Update your profile</h1>
 
 <div class="row">
-  <div class="span6 offset3">
+  <div class="col-md-6 col-md-offset-3">
     <%= form_for @user do |f| %>
-      <%= render 'fields', form: f %>
-      <div class="form-actions">
-        <%= f.submit "Save changes", class: "btn btn-large btn-primary", id: "create" %>
-        <%= f.button "Cancel", class: "btn offset1" %>
-      </div>
-
+    <%= render 'fields', form: f %>
+    <%= f.button "Save changes", class: "btn btn-default btn-primary", id: "create" %>
+    <%= f.button "Cancel", class: "btn col-md-offset-1", type: "cancel" %>
     <% end %>
 
-    <%= gravatar_for(@user) %>
-    <a href="http://gravatar.com/emails">change</a>
+    <div id="edit_gravatar">
+      <%= gravatar_for(@user) %>
+      <a href="http://gravatar.com/emails">change</a>
+    </div>
   </div>
 </div>
