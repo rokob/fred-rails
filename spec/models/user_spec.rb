@@ -16,6 +16,8 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:friendships) }
+  it { should respond_to(:friends) }
 
   it { should be_valid }
   it { should_not be_admin }
