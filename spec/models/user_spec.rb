@@ -18,6 +18,8 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:friendships) }
   it { should respond_to(:friends) }
+  it { should respond_to(:friend_requests) }
+  it { should respond_to(:pending_requests) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -122,4 +124,31 @@ describe User do
     it { should be_admin }
   end
 
+  describe "friendship" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before(:each) do
+      @user.save
+    end
+
+    describe "when friends" do
+      before(:each) do
+        Friendship.request(@user, other_user)
+        Friendship.accept(other_user, @user)
+      end
+
+      specify { @user.friends?(other_user).should be_true }
+      specify { other_user.friends?(@user).should be_true }
+    end
+
+    describe "when not friends" do
+      specify { @user.friends?(other_user).should be_false }
+
+      describe "when pending" do
+        before(:each) do
+          Friendship.request(@user, other_user)
+        end
+        specify { @user.friends?(other_user).should be_false }
+      end
+    end
+  end
 end

@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_many :friendships
-  has_many :friends, :through => :friendships
+  has_many :friends, -> { Friendship.friend_scope }, :through => :friendships
+  has_many :friend_requests, -> { Friendship.requested_scope }, :through => :friendships, :source => :friend
+  has_many :pending_requests, -> { Friendship.pending_scope }, :through => :friendships, :source => :user
 
   before_save { self.email = email.downcase }
   before_create :create_remember_token
@@ -22,6 +24,10 @@ class User < ActiveRecord::Base
 
   def User.hash(token)
     Digest::SHA1.hexdigest(token.to_s)
+  end
+
+  def friends?(other_user)
+    friends.find_by(id: other_user.id)
   end
 
   private
