@@ -1,5 +1,10 @@
 Fred::Application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      get :friends, :friend_requests
+    end
+  end
+
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :comments # FUCKING AROUND
