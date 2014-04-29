@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :not_signed_in, only: [:new, :create]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.all_with_friends_paginated(current_user, params)
   end
 
   def show
