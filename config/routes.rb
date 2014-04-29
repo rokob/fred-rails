@@ -1,11 +1,18 @@
 Fred::Application.routes.draw do
-  resources :users do
+  resources :users
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :friendships, only: [:index, :create, :destroy] do
     member do
-      get :friends, :friend_requests
+      put 'accept'
+      put 'reject'
+      put 'cancel'
+    end
+
+    collection do
+      get 'requested'
+      get 'pending'
     end
   end
-
-  resources :sessions, only: [:new, :create, :destroy]
 
   resources :comments # FUCKING AROUND
 
@@ -16,6 +23,9 @@ Fred::Application.routes.draw do
   match '/signup',   to: "users#new", via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
+
+  match '/friends', to: 'friendships#index', via: 'get'
+  match '/friend_requests', to: 'friendships#requests', via: 'get'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,16 @@
+- provide(:title, @title)
+
+%h1= @title
+
+= will_paginate @users
+
+%ul.users
+  - @users.each do |user|
+    %li
+      .col-md-3
+        = gravatar_for(user, size: 52)
+        = link_to user.name, user
+      .col-md-3.col-md-offset-6
+        = render 'friendships/actions', options: actions
+
+= will_paginate @users
