@@ -2,10 +2,15 @@
 <div class="row">
   <aside class="col-md-4">
     <section>
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
-      </h1>
+      <div class="user-header">
+        <h1>
+          <%= gravatar_for @user %>
+          <%= @user.name %>
+        </h1>
+        <% if current_user.friends?(@user) %>
+          <span class="label label-info">Friends</span>
+        <% end %>
+      </div>
     </section>
   </aside>
 </div>

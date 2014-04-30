@@ -35,16 +35,21 @@ class FriendshipsController < ApplicationController
   def accept
     friend = User.find(friendship_params[:friend_id])
     Friendship.accept(current_user, friend)
+    redirect_to friend
   end
 
   def reject
     friend = User.find(friendship_params[:friend_id])
     Friendship.reject(current_user, friend)
+    flash[:info] = "Request rejected"
+    redirect_to requested_friendships_path
   end
 
   def cancel
     friend = User.find(friendship_params[:friend_id])
     Friendship.cancel(current_user, friend)
+    flash[:info] = "Request canceled"
+    redirect_to pending_friendships_path
   end
 
   private

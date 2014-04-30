@@ -1,10 +1,20 @@
 - if options[:accept]
-  %button.btn.btn-lg.btn-success Accept
+  =form_tag(accept_friendship_path(friendship_id), method: :put) do
+    =hidden_field_tag("friendship[friend_id]", subject.id)
+    =button_tag "Accept", class: "btn btn-lg btn-success"
 - if options[:reject]
-  %button.btn.btn-lg.btn-danger Reject
+  =form_tag(reject_friendship_path(friendship_id), method: :put) do
+    =hidden_field_tag("friendship[friend_id]", subject.id)
+    =button_tag "Reject", class: "btn btn-lg btn-danger"
 - if options[:cancel]
-  %button.btn.btn-lg.btn-warning Cancel
+  = form_tag(cancel_friendship_path(friendship_id), method: :put) do
+    =hidden_field_tag("friendship[friend_id]", subject.id)
+    =button_tag "Cancel", class: "btn btn-lg btn-warning"
 - if options[:unfriend]
-  %button.btn.btn-lg.btn-danger Unfriend
+  = form_tag(friendship_path(friendship_id), method: :delete) do
+    = hidden_field_tag("friendship[friend_id]", subject.id)
+    = button_tag "Unfriend", class: "btn btn-lg btn-danger"
 - if options[:requestable]
-  %button.btn.btn-lg.btn-primary Send request
+  = form_tag(friendships_path, method: :post) do
+    = hidden_field_tag("friendship[friend_id]", subject.id)
+    = button_tag "Send request", class: "btn btn-lg btn-primary"
