@@ -19,3 +19,5 @@
 .secret
 
 /*.dat
+
+coverage

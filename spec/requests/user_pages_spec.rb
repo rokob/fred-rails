@@ -63,10 +63,24 @@ describe "User Pages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    before(:each) { visit user_path(user) }
 
-    it { should have_content(user.name) }
-    it { should have_title(user.name) }
+    describe "as a logged out user" do
+      before(:each) { visit user_path(user) }
+
+      it { should have_content('Sign in') }
+      it { should have_title('Sign in') }
+      it { should_not have_content(user.name) }
+    end
+
+    describe "as a logged in user" do
+      before(:each) do
+        sign_in user
+        visit user_path(user)
+      end
+
+      it { should have_content(user.name) }
+      it { should have_title(user.name) }
+    end
   end
 
   describe "edit" do

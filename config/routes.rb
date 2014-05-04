@@ -17,7 +17,7 @@ Fred::Application.routes.draw do
     end
   end
   match '/friends', to: 'friendships#index', via: 'get'
-  match '/friend_requests', to: 'friendships#requests', via: 'get'
+  match '/friend_requests', to: 'friendships#requested', via: 'get'
 
   resources :users
 

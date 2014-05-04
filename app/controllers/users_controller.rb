@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user, only: [:index, :edit, :update, :destroy, :friends, :friend_requests]
+  before_action :signed_in_user, except: [:new, :create]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
   before_action :not_current_user, only: :destroy
@@ -44,16 +44,6 @@ class UsersController < ApplicationController
     find_user.destroy
     flash[:success] = "User deleted."
     redirect_to users_url
-  end
-
-  def friends
-    @user = find_user
-    @users = @user.friends.paginate(page: params[:page])
-  end
-
-  def friend_requests
-    @user = find_user
-    @users = @user.friend_requests.paginate(page: params[:page])
   end
 
   private

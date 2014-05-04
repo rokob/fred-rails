@@ -27,8 +27,10 @@ end
 
 group :test do
   gem 'capybara', '2.1.0'
+  gem 'database_cleaner', '~> 1.2.0'
   gem 'factory_girl_rails', '4.2.1'
   gem 'selenium-webdriver', '2.35.1'
+  gem 'simplecov', '~> 0.7.1'
 end
 
 group :doc do

@@ -95,6 +95,16 @@ describe Friendship do
               user.friends.should include(friend)
               friend.friends.should include(user)
             end
+
+            it "#between should return a friendship with the user" do
+              friendship = Friendship.between(user, friend)
+              friendship.user.should eq user
+            end
+
+            it "#between should return a friendship with the friend" do
+              friendship = Friendship.between(user, friend)
+              friendship.friend.should eq friend
+            end
           end
 
           describe "rejection" do
@@ -124,6 +134,21 @@ describe Friendship do
             it "should make it so user is not a requester of the friend" do
               Friendship.cancel(user, friend)
               friend.friend_requests.should_not include(user)
+            end
+          end
+
+          describe "unfriend" do
+            before(:each) do
+              Friendship.accept(friend, user)
+              Friendship.unfriend(user, friend)
+            end
+
+            it "should remove the friend from the users friend list" do
+              user.friends.should_not include(friend)
+            end
+
+            it "should remove the user from the friends friend list" do
+              friend.friends.should_not include(user)
             end
           end
         end

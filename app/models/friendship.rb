@@ -10,9 +10,8 @@ class Friendship < ActiveRecord::Base
   REJECTED  = 'rejected'
   CANCELED  = 'canceled'
   DELETED   = 'deleted'
-  BLOCKED   = 'blocked'
-  STATUSES  = [PENDING, REQUESTED, ACCEPTED, REJECTED, CANCELED, DELETED, BLOCKED]
-  NOT_REQUESTABLE_STATUSES = [PENDING, REQUESTED, ACCEPTED, BLOCKED]
+  STATUSES  = [PENDING, REQUESTED, ACCEPTED, REJECTED, CANCELED, DELETED]
+  NOT_REQUESTABLE_STATUSES = [PENDING, REQUESTED, ACCEPTED]
 
   INCLUDE_FRIENDSHIP_ID_SQL = "users.*, friendships.id as friendship_id"
 
@@ -27,10 +26,6 @@ class Friendship < ActiveRecord::Base
 
     def requested_scope
       where(status: REQUESTED).select(INCLUDE_FRIENDSHIP_ID_SQL)
-    end
-
-    def blocked_scope
-      where(status: BLOCKED).select(INCLUDE_FRIENDSHIP_ID_SQL)
     end
 
     def not_requestable_scope
