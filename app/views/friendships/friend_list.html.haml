@@ -7,10 +7,10 @@
 %ul.users
   - @users.each do |user|
     %li
-      .col-md-3
+      .col-md-4
         = gravatar_for(user, size: 52)
         = link_to user.name, user
-      .col-md-3.col-md-offset-6
+      .col-md-3.col-md-offset-5
         = render 'friendships/actions', options: actions, subject: user, friendship_id: user.friendship_id
 
 = will_paginate @users

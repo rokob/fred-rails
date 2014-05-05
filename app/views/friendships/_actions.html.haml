@@ -1,9 +1,10 @@
 - if options[:accept]
-  =form_tag(accept_friendship_path(friendship_id), method: :put) do
+  -# TODO fix inline style, it was just a test to ensure it would work
+  =form_tag(accept_friendship_path(friendship_id), method: :put, style: "float: left; padding-right: 5px;") do
     =hidden_field_tag("friendship[friend_id]", subject.id)
     =button_tag "Accept", class: "btn btn-lg btn-success"
 - if options[:reject]
-  =form_tag(reject_friendship_path(friendship_id), method: :put) do
+  =form_tag(reject_friendship_path(friendship_id), method: :put, style: "float: left;") do
     =hidden_field_tag("friendship[friend_id]", subject.id)
     =button_tag "Reject", class: "btn btn-lg btn-danger"
 - if options[:cancel]

@@ -1,11 +1,13 @@
 %li
-  = gravatar_for(user, size: 52)
-  = link_to user.name, user
-  - if user.is_friends_with_current_user?
-    %span.label.label-info Friends
-  - elsif user.is_requestable_by_current_user?
-    =form_tag(friendships_path, method: :post) do
-      =hidden_field_tag("friendship[friend_id]", user.id)
-      =button_tag "Send friend request", class: "btn btn-lg btn-success"
-  - if current_user.admin? && !current_user?(user)
-    =link_to "| delete", user, method: :delete, data: { confirm: "You sure?" }
+  .col-md-5
+    = gravatar_for(user, size: 52)
+    = link_to user.name, user
+    - if user.is_friends_with_current_user?
+      %span.label.label-info Friends
+    - if current_user.admin? && !current_user?(user)
+      =link_to "| delete", user, method: :delete, data: { confirm: "You sure?" }
+  - if user.is_requestable_by_current_user?
+    .col-md-3.col-md-offset-4
+      =form_tag(friendships_path, method: :post) do
+        =hidden_field_tag("friendship[friend_id]", user.id)
+        =button_tag "Send friend request", class: "btn btn-lg btn-success"
