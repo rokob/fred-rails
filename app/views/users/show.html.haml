@@ -1,0 +1,10 @@
+- provide(:title, @user.name)
+.row
+  %aside.col-md-4
+    %section
+      .user-header
+        %h1
+          = gravatar_for @user
+          = @user.name
+        - if current_user.friends?(@user)
+          %span.label.label-info Friends

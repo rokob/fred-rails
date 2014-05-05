@@ -1,0 +1,13 @@
+- provide(:title, 'Edit user')
+%h1 Update your profile
+
+.row
+  .col-md-6.col-md-offset-3
+    = form_for @user do |f|
+      = render 'fields', form: f
+      = f.button "Save changes", class: "btn btn-default btn-primary", id: "create"
+      = f.button "Cancel", class: "btn col-md-offset-1", type: "cancel"
+
+    #edit_gravatar
+      = gravatar_for(@user)
+      %a{href: "http://gravatar.com/emails"} change
